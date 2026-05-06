@@ -16,7 +16,7 @@ $total = mysqli_num_rows($result);
     </div>
     <div class="p-3">
         <form method="GET" class="d-flex gap-2 mb-3">
-            <input type="text" name="search" class="form-control" placeholder="Cari nama atau mata pelajaran..." 
+            <input type="text" name="search" class="form-control" placeholder="Cari nama atau jabatan..." 
                    value="<?= htmlspecialchars($search) ?>" style="max-width:300px; border-color:var(--biru-muda);">
             <button type="submit" class="btn-biru btn">Cari</button>
             <?php if ($search): ?><a href="." class="btn btn-outline-secondary">Reset</a><?php endif; ?>
@@ -28,7 +28,7 @@ $total = mysqli_num_rows($result);
                         <th width="5%">No</th>
                         <th width="12%">Foto</th>
                         <th>Nama Guru</th>
-                        <th>Mata Pelajaran</th>
+                        <th>Jabatan</th>
                         <th>NIP</th>
                         <th>Email</th>
                         <th width="15%">Aksi</th>

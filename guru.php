@@ -23,7 +23,7 @@ $total = mysqli_num_rows($result_guru);
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
             <p class="mb-0 text-muted">Menampilkan <strong><?= $total ?></strong> guru</p>
             <form method="GET" class="d-flex gap-2">
-                <input type="text" name="search" class="form-control" placeholder="Cari nama atau mata pelajaran..." value="<?= htmlspecialchars($search) ?>" style="min-width:250px; border-color:var(--biru-muda);">
+                <input type="text" name="search" class="form-control" placeholder="Cari nama atau jabatan..." value="<?= htmlspecialchars($search) ?>" style="min-width:250px; border-color:var(--biru-muda);">
                 <button type="submit" class="btn-biru btn">🔍 Cari</button>
                 <?php if ($search): ?><a href="guru.php" class="btn btn-outline-secondary">✕</a><?php endif; ?>
             </form>

@@ -10,7 +10,7 @@ if (!$guru) redirect(BASE_URL.'admin/guru/', 'Data tidak ditemukan!', 'danger');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = escape($koneksi, $_POST['nama']);
-    $mapel = escape($koneksi, $_POST['mata_pelajaran']);
+    $jabatan = escape($koneksi, $_POST['jabatan']);
     $nip = escape($koneksi, $_POST['nip']);
     $email = escape($koneksi, $_POST['email']);
     $telp = escape($koneksi, $_POST['telp']);
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $sql = "UPDATE guru SET nama='$nama', mata_pelajaran='$mapel', nip='$nip', email='$email', telp='$telp', foto='$foto' WHERE id=$id";
+    $sql = "UPDATE guru SET nama='$nama', mata_pelajaran='$jabatan', nip='$nip', email='$email', telp='$telp', foto='$foto' WHERE id=$id";
     if (mysqli_query($koneksi, $sql)) {
         redirect(BASE_URL.'admin/guru/', 'Data guru berhasil diperbarui!');
     }
@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($guru['nama']) ?>" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-semibold">Mata Pelajaran <span class="text-danger">*</span></label>
-                    <input type="text" name="mata_pelajaran" class="form-control" value="<?= htmlspecialchars($guru['mata_pelajaran']) ?>" required>
+                    <label class="form-label fw-semibold">Jabatan <span class="text-danger">*</span></label>
+                    <input type="text" name="jabatan" class="form-control" value="<?= htmlspecialchars($guru['mata_pelajaran']) ?>" required>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">NIP</label>

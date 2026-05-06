@@ -9,7 +9,7 @@ cekLogin();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = escape($koneksi, $_POST['nama']);
-    $mapel = escape($koneksi, $_POST['mata_pelajaran']);
+    $jabatan = escape($koneksi, $_POST['jabatan']);
     $nip = escape($koneksi, $_POST['nip']);
     $email = escape($koneksi, $_POST['email']);
     $telp = escape($koneksi, $_POST['telp']);
@@ -33,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($nama) || empty($mapel)) {
-        $_SESSION['flash'] = ['pesan' => 'Nama dan mata pelajaran wajib diisi!', 'tipe' => 'danger'];
+    if (empty($nama) || empty($jabatan)) {
+        $_SESSION['flash'] = ['pesan' => 'Nama dan jabatan wajib diisi!', 'tipe' => 'danger'];
     } else {
         $sql = "INSERT INTO guru (nama, mata_pelajaran, nip, email, telp, foto) 
-                VALUES ('$nama','$mapel','$nip','$email','$telp','$foto')";
+                VALUES ('$nama','$jabatan','$nip','$email','$telp','$foto')";
         if (mysqli_query($koneksi, $sql)) {
             redirect(BASE_URL.'admin/guru/', 'Guru berhasil ditambahkan!');
             exit; // Pastikan berhenti di sini agar redirect bekerja
@@ -68,9 +68,9 @@ require_once __DIR__ . '/../includes/admin_header.php';
                            value="<?= htmlspecialchars($_POST['nama'] ?? '') ?>" required>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-semibold">Mata Pelajaran <span class="text-danger">*</span></label>
-                    <input type="text" name="mata_pelajaran" class="form-control" placeholder="Contoh: Matematika" 
-                           value="<?= htmlspecialchars($_POST['mata_pelajaran'] ?? '') ?>" required>
+                    <label class="form-label fw-semibold">Jabatan <span class="text-danger">*</span></label>
+                    <input type="text" name="jabatan" class="form-control" placeholder="Contoh: Guru Kelas / Kepala Sekolah" 
+                           value="<?= htmlspecialchars($_POST['jabatan'] ?? '') ?>" required>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">NIP</label>
