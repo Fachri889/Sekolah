@@ -20,10 +20,53 @@ setTimeout(() => {
     });
 }, 4000);
 
-// Confirm delete
+// Logout confirmation
+document.querySelectorAll('.btn-logout').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const logoutUrl = this.getAttribute('href');
+        
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Anda akan keluar dari panel admin!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Keluar!',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            background: '#fff',
+            borderRadius: '15px'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = logoutUrl;
+            }
+        });
+    });
+});
+
+// Upgrade Delete confirmation to SweetAlert2
 document.querySelectorAll('.btn-hapus').forEach(btn => {
     btn.addEventListener('click', function(e) {
-        if (!confirm('Yakin ingin menghapus data ini?')) e.preventDefault();
+        e.preventDefault();
+        const deleteUrl = this.getAttribute('href');
+        
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = deleteUrl;
+            }
+        });
     });
 });
 </script>

@@ -22,6 +22,8 @@ $total_info = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FR
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -81,7 +83,7 @@ $total_info = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FR
             </a>
         </div>
         <div class="nav-item">
-            <a href="<?= BASE_URL ?>admin/logout.php">
+            <a href="<?= BASE_URL ?>admin/logout.php" class="btn-logout">
                 <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span> Logout
             </a>
         </div>
@@ -111,7 +113,7 @@ $total_info = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FR
                     <?php endif; ?>
                 </div>
             </div>
-            <a href="logout.php" class="btn btn-sm btn-outline-danger"><i class="fas fa-sign-out-alt"></i></a>
+            <a href="<?= BASE_URL ?>admin/logout.php" class="btn btn-sm btn-outline-danger btn-logout"><i class="fas fa-sign-out-alt"></i></a>
         </div>
     </div>
 
