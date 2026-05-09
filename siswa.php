@@ -16,7 +16,7 @@ $search = isset($_GET['search']) ? escape($koneksi, $_GET['search']) : '';
 
 $where = "WHERE 1=1";
 if ($kelas_filter && in_array($kelas_filter, $daftar_kelas)) $where .= " AND kelas='$kelas_filter'";
-if ($search) $where .= " AND (nama LIKE '%$search%' OR nis LIKE '%$search%')";
+if ($search) $where .= " AND (nama LIKE '%$search%')";
 
 // Pagination
 $per_page = 15;
@@ -51,7 +51,7 @@ $result_siswa = mysqli_query($koneksi, "SELECT * FROM siswa $where ORDER BY kela
             </div>
             <form method="GET" class="d-flex gap-2">
                 <?php if ($kelas_filter): ?><input type="hidden" name="kelas" value="<?= htmlspecialchars($kelas_filter) ?>"><?php endif; ?>
-                <input type="text" name="search" class="form-control" placeholder="Cari nama / NIS..." value="<?= htmlspecialchars($search) ?>" style="border-color:var(--biru-muda);">
+                <input type="text" name="search" class="form-control" placeholder="Cari nama..." value="<?= htmlspecialchars($search) ?>" style="border-color:var(--biru-muda);">
                 <button type="submit" class="btn-biru btn">🔍</button>
                 <?php if ($search): ?><a href="siswa.php<?= $kelas_filter ? '?kelas='.$kelas_filter : '' ?>" class="btn btn-outline-secondary">✕</a><?php endif; ?>
             </form>
@@ -72,7 +72,6 @@ $result_siswa = mysqli_query($koneksi, "SELECT * FROM siswa $where ORDER BY kela
                     <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th>NIS</th>
                             <th>Nama Siswa</th>
                             <th>Kelas</th>
                             <th>Jenis Kelamin</th>
@@ -88,7 +87,6 @@ $result_siswa = mysqli_query($koneksi, "SELECT * FROM siswa $where ORDER BY kela
                         ?>
                         <tr>
                             <td class="text-muted"><?= $no++ ?></td>
-                            <td><code><?= htmlspecialchars($siswa['nis']) ?></code></td>
                             <td><strong><?= htmlspecialchars($siswa['nama']) ?></strong></td>
                             <td><span class="kelas-badge"><?= htmlspecialchars($siswa['kelas']) ?></span></td>
                             <td>

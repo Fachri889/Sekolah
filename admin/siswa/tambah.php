@@ -6,23 +6,16 @@ require_once __DIR__ . '/../includes/admin_header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = escape($koneksi, $_POST['nama']);
-    $nis = escape($koneksi, $_POST['nis']);
     $kelas = escape($koneksi, $_POST['kelas']);
     $jk = escape($koneksi, $_POST['jenis_kelamin']);
     $alamat = escape($koneksi, $_POST['alamat']);
     $telp = escape($koneksi, $_POST['telp']);
 
-    if (empty($nama) || empty($nis) || empty($kelas)) {
-        $_SESSION['flash'] = ['pesan' => 'Nama, NIS, dan Kelas wajib diisi!', 'tipe' => 'danger'];
+    if (empty($nama) || empty($kelas)) {
+        $_SESSION['flash'] = ['pesan' => 'Nama dan Kelas wajib diisi!', 'tipe' => 'danger'];
     } else {
-        // Cek duplikat NIS
-        $cek = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT id FROM siswa WHERE nis='$nis'"));
-        if ($cek) {
-            $_SESSION['flash'] = ['pesan' => 'NIS sudah digunakan siswa lain!', 'tipe' => 'danger'];
-        } else {
-            $sql = "INSERT INTO siswa (nama, nis, kelas, jenis_kelamin, alamat, telp) VALUES ('$nama','$nis','$kelas','$jk','$alamat','$telp')";
-            if (mysqli_query($koneksi, $sql)) redirect(BASE_URL.'admin/siswa/', 'Siswa berhasil ditambahkan!');
-        }
+        $sql = "INSERT INTO siswa (nama, kelas, jenis_kelamin, alamat, telp) VALUES ('$nama','$kelas','$jk','$alamat','$telp')";
+        if (mysqli_query($koneksi, $sql)) redirect(BASE_URL.'admin/siswa/', 'Siswa berhasil ditambahkan!');
     }
 }
 ?>
@@ -42,10 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="form-label fw-semibold">Nama Lengkap <span class="text-danger">*</span></label>
                     <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($_POST['nama'] ?? '') ?>" required>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label fw-semibold">NIS <span class="text-danger">*</span></label>
-                    <input type="text" name="nis" class="form-control" placeholder="Nomor Induk Siswa" value="<?= htmlspecialchars($_POST['nis'] ?? '') ?>" required>
-                </div>
+
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Kelas <span class="text-danger">*</span></label>
                     <select name="kelas" class="form-select" required>

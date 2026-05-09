@@ -10,7 +10,7 @@ $daftar_kelas = [];
 while ($row = mysqli_fetch_assoc($result_kelas)) $daftar_kelas[] = $row['kelas'];
 
 $where = "WHERE 1=1";
-if ($search) $where .= " AND (nama LIKE '%$search%' OR nis LIKE '%$search%')";
+if ($search) $where .= " AND (nama LIKE '%$search%')";
 if ($kelas_filter && in_array($kelas_filter, $daftar_kelas)) $where .= " AND kelas='$kelas_filter'";
 
 $per_page = 20;
@@ -35,7 +35,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM siswa $where ORDER BY kelas, nam
                     <option value="<?= $kls ?>" <?= $kelas_filter===$kls?'selected':'' ?>><?= $kls ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="text" name="search" class="form-control" placeholder="Cari nama/NIS..." value="<?= htmlspecialchars($search) ?>" style="max-width:220px; border-color:var(--biru-muda);">
+                <input type="text" name="search" class="form-control" placeholder="Cari nama..." value="<?= htmlspecialchars($search) ?>" style="max-width:220px; border-color:var(--biru-muda);">
                 <button type="submit" class="btn-biru btn">Cari</button>
                 <?php if ($search || $kelas_filter): ?><a href="." class="btn btn-outline-secondary">Reset</a><?php endif; ?>
             </form>
@@ -44,14 +44,13 @@ $result = mysqli_query($koneksi, "SELECT * FROM siswa $where ORDER BY kelas, nam
             <table class="table table-custom table-hover mb-0">
                 <thead>
                     <tr>
-                        <th>No</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>J/K</th><th>Alamat</th><th>Aksi</th>
+                        <th>No</th><th>Nama</th><th>Kelas</th><th>J/K</th><th>Alamat</th><th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $no=$offset+1; while ($s = mysqli_fetch_assoc($result)): ?>
                     <tr>
                         <td><?= $no++ ?></td>
-                        <td><code><?= htmlspecialchars($s['nis']) ?></code></td>
                         <td><strong><?= htmlspecialchars($s['nama']) ?></strong></td>
                         <td><span class="kelas-badge"><?= htmlspecialchars($s['kelas']) ?></span></td>
                         <td><span style="padding:3px 10px;border-radius:12px;font-size:0.8rem;background:<?= $s['jenis_kelamin']==='L'?'var(--biru-light)':'#fce4ec' ?>;color:<?= $s['jenis_kelamin']==='L'?'var(--biru-dark)':'#c2185b' ?>;"><?= $s['jenis_kelamin']==='L'?'👦 L':'👧 P' ?></span></td>

@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS guru (
 CREATE TABLE IF NOT EXISTS siswa (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama VARCHAR(100) NOT NULL,
-    nis VARCHAR(20) NOT NULL UNIQUE,
     kelas VARCHAR(20) NOT NULL,
     jenis_kelamin ENUM('L', 'P') NOT NULL,
     alamat TEXT DEFAULT NULL,
@@ -78,7 +77,7 @@ INSERT INTO users (username, password, nama_lengkap, role) VALUES
 INSERT INTO guru (nama, mata_pelajaran, nip, email) VALUES
 
 -- Data Siswa Contoh
-INSERT INTO siswa (nama, nis, kelas, jenis_kelamin, alamat) VALUES
+INSERT INTO siswa (nama, kelas, jenis_kelamin, alamat) VALUES
 
 -- Data Informasi Contoh
 INSERT INTO informasi (judul, konten, kategori, penulis, status) VALUES

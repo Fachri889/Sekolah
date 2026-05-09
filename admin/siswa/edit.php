@@ -10,20 +10,13 @@ if (!$siswa) redirect(BASE_URL.'admin/siswa/', 'Data tidak ditemukan!', 'danger'
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = escape($koneksi, $_POST['nama']);
-    $nis = escape($koneksi, $_POST['nis']);
     $kelas = escape($koneksi, $_POST['kelas']);
     $jk = escape($koneksi, $_POST['jenis_kelamin']);
     $alamat = escape($koneksi, $_POST['alamat']);
     $telp = escape($koneksi, $_POST['telp']);
 
-    // Cek duplikat NIS (kecuali diri sendiri)
-    $cek = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT id FROM siswa WHERE nis='$nis' AND id!=$id"));
-    if ($cek) {
-        $_SESSION['flash'] = ['pesan' => 'NIS sudah digunakan siswa lain!', 'tipe' => 'danger'];
-    } else {
-        $sql = "UPDATE siswa SET nama='$nama', nis='$nis', kelas='$kelas', jenis_kelamin='$jk', alamat='$alamat', telp='$telp' WHERE id=$id";
-        if (mysqli_query($koneksi, $sql)) redirect(BASE_URL.'admin/siswa/', 'Data siswa berhasil diperbarui!');
-    }
+    $sql = "UPDATE siswa SET nama='$nama', kelas='$kelas', jenis_kelamin='$jk', alamat='$alamat', telp='$telp' WHERE id=$id";
+    if (mysqli_query($koneksi, $sql)) redirect(BASE_URL.'admin/siswa/', 'Data siswa berhasil diperbarui!');
 }
 
 $kelas_list = ['Kelas 1','Kelas 2','Kelas 3','Kelas 4','Kelas 5','Kelas 6'];
@@ -50,10 +43,7 @@ sort($kelas_list);
                     <label class="form-label fw-semibold">Nama Lengkap <span class="text-danger">*</span></label>
                     <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($siswa['nama']) ?>" required>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label fw-semibold">NIS <span class="text-danger">*</span></label>
-                    <input type="text" name="nis" class="form-control" value="<?= htmlspecialchars($siswa['nis']) ?>" required>
-                </div>
+
                 <div class="col-md-4">
                     <label class="form-label fw-semibold">Kelas <span class="text-danger">*</span></label>
                     <select name="kelas" class="form-select" required>
