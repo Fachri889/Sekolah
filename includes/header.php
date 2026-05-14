@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__ . '/../koneksi.php';
 
 $nama_sekolah = getSetting($koneksi, 'nama_sekolah');
+$logo_sekolah  = getSetting($koneksi, 'logo_sekolah');
 $halaman_aktif = $halaman_aktif ?? '';
 ?>
 <!DOCTYPE html>
@@ -23,10 +24,16 @@ $halaman_aktif = $halaman_aktif ?? '';
 <nav class="navbar navbar-sekolah navbar-expand-lg sticky-top">
     <div class="container">
         <a class="navbar-brand" href="<?= BASE_URL ?>index.php">
-            <div class="logo-icon">🏫</div>
+            <div class="logo-icon" style="width:52px;height:52px;min-width:52px;max-width:52px;border-radius:50%;overflow:hidden;background:var(--kuning);border:3px solid #fff;box-shadow:0 3px 12px rgba(255,215,0,0.6);flex-shrink:0;">
+                <?php if (!empty($logo_sekolah)): ?>
+                    <img src="<?= BASE_URL ?>uploads/<?= htmlspecialchars($logo_sekolah) ?>" alt="Logo <?= htmlspecialchars($nama_sekolah) ?>" style="width:100%;height:100%;object-fit:cover;display:block;">
+                <?php else: ?>
+                    <i class="fas fa-school" style="font-size:1.6rem;color:#2c5282;"></i>
+                <?php endif; ?>
+            </div>
             <div>
                 <div><?= htmlspecialchars($nama_sekolah) ?></div>
-                <small style="font-size:0.65rem;font-weight:400;color:rgba(44,62,80,0.7);">Unggul · Berkarakter · Berprestasi</small>
+                <small style="font-size:0.65rem;font-weight:400;color:rgba(44,62,80,0.7);">Unggul &middot; Berkarakter &middot; Berprestasi</small>
             </div>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -36,7 +43,24 @@ $halaman_aktif = $halaman_aktif ?? '';
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link <?= $halaman_aktif==='home'?'active':'' ?>" href="<?= BASE_URL ?>index.php"><i class="fas fa-home me-1"></i>Home</a></li>
                 <li class="nav-item"><a class="nav-link <?= $halaman_aktif==='guru'?'active':'' ?>" href="<?= BASE_URL ?>guru.php"><i class="fas fa-chalkboard-teacher me-1"></i>Guru</a></li>
-                <li class="nav-item"><a class="nav-link <?= $halaman_aktif==='informasi'?'active':'' ?>" href="<?= BASE_URL ?>informasi.php"><i class="fas fa-newspaper me-1"></i>Informasi</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?= $halaman_aktif==='informasi'?'active':'' ?>" href="<?= BASE_URL ?>informasi.php" id="dropdownInformasi" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-newspaper me-1"></i>Informasi
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-sekolah" aria-labelledby="dropdownInformasi">
+                        <li>
+                            <a class="dropdown-item" href="<?= BASE_URL ?>informasi.php?kategori=berita">
+                                <i class="fas fa-newspaper me-2" style="color:var(--biru-dark);"></i>Berita
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="<?= BASE_URL ?>informasi.php?kategori=pengumuman">
+                                <i class="fas fa-bullhorn me-2" style="color:#856404;"></i>Pengumuman
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link <?= $halaman_aktif==='kegiatan'?'active':'' ?>" href="<?= BASE_URL ?>kegiatan.php"><i class="fas fa-camera-retro me-1"></i>Kegiatan</a></li>
                 <li class="nav-item"><a class="nav-link <?= $halaman_aktif==='siswa'?'active':'' ?>" href="<?= BASE_URL ?>siswa.php"><i class="fas fa-users me-1"></i>Siswa</a></li>
                 <li class="nav-item"><a class="nav-link <?= $halaman_aktif==='lokasi'?'active':'' ?>" href="<?= BASE_URL ?>lokasi.php"><i class="fas fa-map-marker-alt me-1"></i>Lokasi</a></li>
                 <?php if (isset($_SESSION['user_id'])): ?>

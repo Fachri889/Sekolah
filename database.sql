@@ -62,6 +62,17 @@ CREATE TABLE IF NOT EXISTS pengaturan (
     keterangan VARCHAR(200)
 );
 
+-- Tabel Kegiatan
+CREATE TABLE IF NOT EXISTS kegiatan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    judul VARCHAR(200) NOT NULL,
+    deskripsi TEXT NOT NULL,
+    tanggal VARCHAR(100) NOT NULL,
+    gambar VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- ============================================
 -- DATA AWAL (SEED)
 -- ============================================

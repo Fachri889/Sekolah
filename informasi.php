@@ -28,8 +28,16 @@ $result_info = mysqli_query($koneksi, "SELECT * FROM informasi $where ORDER BY c
 <!-- PAGE HEADER -->
 <div style="background: linear-gradient(135deg, var(--biru-light), var(--kuning-light)); padding: 50px 0 30px;">
     <div class="container text-center">
-        <h1 class="fw-bold mb-2">📰 Informasi & Berita</h1>
-        <p class="text-muted">Berita terkini dan pengumuman resmi dari sekolah</p>
+        <?php if ($filter === 'berita'): ?>
+            <h1 class="fw-bold mb-2"><i class="fas fa-newspaper me-2"></i>Berita</h1>
+            <p class="text-muted">Berita terkini seputar kegiatan dan prestasi sekolah</p>
+        <?php elseif ($filter === 'pengumuman'): ?>
+            <h1 class="fw-bold mb-2"><i class="fas fa-bullhorn me-2"></i>Pengumuman</h1>
+            <p class="text-muted">Pengumuman resmi dari sekolah untuk warga sekolah</p>
+        <?php else: ?>
+            <h1 class="fw-bold mb-2">📰 Informasi & Berita</h1>
+            <p class="text-muted">Berita terkini dan pengumuman resmi dari sekolah</p>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -60,16 +68,18 @@ $result_info = mysqli_query($koneksi, "SELECT * FROM informasi $where ORDER BY c
         <?php else: ?>
         <!-- DAFTAR INFORMASI -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-            <div class="d-flex gap-2 flex-wrap">
-                <a href="informasi.php" class="kelas-btn <?= !$filter ? 'active' : '' ?>">Semua</a>
-                <a href="?kategori=berita" class="kelas-btn <?= $filter==='berita' ? 'active' : '' ?>">📰 Berita</a>
-                <a href="?kategori=pengumuman" class="kelas-btn <?= $filter==='pengumuman' ? 'active' : '' ?>">📣 Pengumuman</a>
+            <div>
+                <?php if ($filter): ?>
+                <span class="fw-semibold" style="color:var(--biru-dark);">
+                    <?= $filter === 'berita' ? '<i class="fas fa-newspaper me-1"></i>Berita' : '<i class="fas fa-bullhorn me-1"></i>Pengumuman' ?>
+                </span>
+                <?php endif; ?>
             </div>
             <form method="GET" class="d-flex gap-2">
                 <?php if ($filter): ?><input type="hidden" name="kategori" value="<?= $filter ?>"><?php endif; ?>
                 <input type="text" name="search" class="form-control" placeholder="Cari informasi..." value="<?= htmlspecialchars($search) ?>" style="border-color:var(--biru-muda);">
-                <button type="submit" class="btn-biru btn">🔍</button>
-                <?php if ($search): ?><a href="informasi.php" class="btn btn-outline-secondary">✕</a><?php endif; ?>
+                <button type="submit" class="btn-biru btn"><i class="fas fa-search"></i></button>
+                <?php if ($search): ?><a href="informasi.php<?= $filter ? '?kategori='.$filter : '' ?>" class="btn btn-outline-secondary">✕</a><?php endif; ?>
             </form>
         </div>
 

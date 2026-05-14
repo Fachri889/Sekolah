@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../koneksi.php';
 cekLogin();
 
 $nama_sekolah = getSetting($koneksi, 'nama_sekolah');
+$logo_sekolah  = getSetting($koneksi, 'logo_sekolah');
 $role = $_SESSION['role'];
 $halaman_admin = $halaman_admin ?? '';
 
@@ -12,6 +13,7 @@ $halaman_admin = $halaman_admin ?? '';
 $total_guru = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FROM guru"))['t'];
 $total_siswa = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FROM siswa"))['t'];
 $total_info = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FROM informasi"))['t'];
+$total_kegiatan = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FROM kegiatan"))['t'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -30,7 +32,13 @@ $total_info = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FR
 <!-- SIDEBAR -->
 <div class="admin-sidebar" id="sidebar">
     <div class="sidebar-brand">
-        <div class="brand-icon">🏫</div>
+        <?php if (!empty($logo_sekolah)): ?>
+            <div class="brand-logo-wrap" style="width:44px;height:44px;min-width:44px;max-width:44px;border-radius:50%;overflow:hidden;border:3px solid var(--kuning);flex-shrink:0;">
+                <img src="<?= BASE_URL ?>uploads/<?= htmlspecialchars($logo_sekolah) ?>" alt="Logo Sekolah" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+        <?php else: ?>
+            <div class="brand-icon"><i class="fas fa-school"></i></div>
+        <?php endif; ?>
         <span><?= htmlspecialchars(substr($nama_sekolah, 0, 30)) ?></span>
     </div>
 
@@ -59,6 +67,12 @@ $total_info = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT COUNT(*) as t FR
             <a href="<?= BASE_URL ?>admin/informasi/" class="<?= $halaman_admin==='informasi'?'active':'' ?>">
                 <span class="nav-icon"><i class="fas fa-newspaper"></i></span> Informasi
                 <span class="ms-auto badge" style="background:var(--biru-muda);color:#333;font-size:0.7rem;"><?= $total_info ?></span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="<?= BASE_URL ?>admin/kegiatan/" class="<?= $halaman_admin==='kegiatan'?'active':'' ?>">
+                <span class="nav-icon"><i class="fas fa-camera-retro"></i></span> Kegiatan
+                <span class="ms-auto badge" style="background:var(--kuning);color:#333;font-size:0.7rem;"><?= $total_kegiatan ?></span>
             </a>
         </div>
 
