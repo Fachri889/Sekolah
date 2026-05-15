@@ -23,6 +23,9 @@ $visi = getSetting($koneksi, 'visi');
 $misi = getSetting($koneksi, 'misi');
 $kepala_sekolah = getSetting($koneksi, 'kepala_sekolah');
 $nama_sekolah = getSetting($koneksi, 'nama_sekolah');
+$foto_kepala_sekolah = getSetting($koneksi, 'foto_kepala_sekolah');
+$deskripsi_kepala_sekolah = getSetting($koneksi, 'deskripsi_kepala_sekolah');
+if (empty($deskripsi_kepala_sekolah)) $deskripsi_kepala_sekolah = 'Memimpin dengan dedikasi tinggi untuk kemajuan pendidikan';
 ?>
 
 <!-- HERO SECTION -->
@@ -126,10 +129,16 @@ $nama_sekolah = getSetting($koneksi, 'nama_sekolah');
         <div class="row g-4 align-items-stretch">
             <div class="col-lg-4">
                 <div class="h-100 p-4 rounded-3 text-center" style="background: linear-gradient(135deg, var(--biru-light), var(--kuning-light)); border: 2px solid var(--biru-muda);">
-                    <div style="font-size:5rem; margin-bottom:15px;">👨‍💼</div>
+                    <?php if (!empty($foto_kepala_sekolah)): ?>
+                        <div class="mb-3">
+                            <img src="uploads/<?= htmlspecialchars($foto_kepala_sekolah) ?>" alt="Foto Kepala Sekolah" style="width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 4px solid var(--biru-dark); box-shadow: 0 4px 16px rgba(0,0,0,0.12);">
+                        </div>
+                    <?php else: ?>
+                        <div style="font-size:5rem; margin-bottom:15px;">👨‍💼</div>
+                    <?php endif; ?>
                     <h5 style="color:var(--biru-dark);">Kepala Sekolah</h5>
                     <h4 class="fw-bold"><?= htmlspecialchars($kepala_sekolah) ?></h4>
-                    <p class="text-muted small">Memimpin dengan dedikasi tinggi untuk kemajuan pendidikan</p>
+                    <p class="text-muted small"><?= htmlspecialchars($deskripsi_kepala_sekolah) ?></p>
                 </div>
             </div>
             <div class="col-lg-4">
